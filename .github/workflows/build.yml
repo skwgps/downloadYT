@@ -25,7 +25,7 @@ jobs:
 
       - name: Build EXE with PyInstaller
         run: |
-          cd DownloadYT
+          cd downloadYT
           pyinstaller --noconsole --onefile --add-data "school_logo.png;." "file.py"
 
       - name: Create GitHub Release
