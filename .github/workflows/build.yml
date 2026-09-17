@@ -26,7 +26,7 @@ jobs:
       - name: Build EXE with PyInstaller
         run: |
           cd DownloadYT
-          pyinstaller --noconsole --onefile --add-data "school_logo.png;." "downloadyt(ui).py"
+          pyinstaller --noconsole --onefile --add-data "school_logo.png;." "file.py"
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
