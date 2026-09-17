@@ -1,9 +1,8 @@
 name: Build and Release EXE
 
 on:
-  push:
-    tags:
-      - 'v*' # 當你推送標籤 (例如 v1.0) 時自動啟動打包
+  release:
+    types: [published] # 當你在 GitHub 網頁發布 Release 時自動觸發
 
 jobs:
   build:
@@ -26,11 +25,11 @@ jobs:
       - name: Build EXE with PyInstaller
         run: |
           cd downloadYT
-          pyinstaller --noconsole --onefile --add-data "school_logo.png;." "file.py"
+          pyinstaller --noconsole --onefile --add-data "school_logo.png;." file.py
 
-      - name: Create GitHub Release
+      - name: Upload EXE to Release
         uses: softprops/action-gh-release@v1
         with:
-          files: DownloadYT/dist/*.exe
+          files: downloadYT/dist/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
