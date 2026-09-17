@@ -1,0 +1,36 @@
+name: Build and Release EXE
+
+on:
+  push:
+    tags:
+      - 'v*' # 當你推送標籤 (例如 v1.0) 時自動啟動打包
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytubefix customtkinter Pillow pyinstaller
+
+      - name: Build EXE with PyInstaller
+        run: |
+          cd DownloadYT
+          pyinstaller --noconsole --onefile --add-data "school_logo.png;." "downloadyt(ui).py"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: DownloadYT/dist/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
